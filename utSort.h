@@ -25,7 +25,6 @@ TEST (Sort, sortByIncreasingPerimeter) {
 	ASSERT_EQ(rect1.name, (*it)->name);
 	it++;
 	ASSERT_EQ(cir2.name, (*it)->name);
-	it++;
 }
 
 TEST (Sort, sortByDecreasingPerimeter) {
