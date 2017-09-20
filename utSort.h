@@ -16,7 +16,6 @@ TEST (Sort, sortByIncreasingPerimeter) {
 	myList.push_back(&cir2);
 	myList.push_back(&tri1);
 	myList.push_back(&rect1);
-	myList.push_back(&rect2);
 	sort.sortByIncreasingPerimeter(&myList);
 	std::list<Shape *>::iterator it = myList.begin();
 	ASSERT_EQ(cir1.name, (*it)->name);
@@ -27,7 +26,6 @@ TEST (Sort, sortByIncreasingPerimeter) {
 	it++;
 	ASSERT_EQ(cir2.name, (*it)->name);
 	it++;
-	ASSERT_EQ();
 }
 
 TEST (Sort, sortByDecreasingPerimeter) {
@@ -115,7 +113,7 @@ TEST (Sort, sortByIncreasingCompactness) {
 	it++;
 	ASSERT_EQ(rect1.name, (*it)->name);
 	it++;
-	ASSERT_EQ(cir1.name, (*it)->name);
+	ASSERT_EQ(cir2.name, (*it)->name);
 }
 
 #endif
