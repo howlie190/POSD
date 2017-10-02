@@ -19,3 +19,4 @@ clean:
 	rm -f *.o hw2
 stat:
 	wc *.h *.cpp
+	
