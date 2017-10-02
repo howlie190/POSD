@@ -14,7 +14,7 @@ bool Number :: match(Number operand) {
 	ss >> value;
 	return _value == value;
 }
-bool Number :: match(Variable &operand) {
+bool Number :: match(Var &operand) {
 	string value;
 	std :: stringstream ss;
 	ss << _value;

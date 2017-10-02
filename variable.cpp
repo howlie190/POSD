@@ -4,13 +4,13 @@
 #include <string>
 #include <sstream>
 using std :: string;
-Variable :: Variable(string s) : _symbol(s) {}
-string Variable :: value() { return _value; }
-string Variable :: symbol() { return _symbol; }
-void Variable :: set_value(string key) { _value = key; }
-bool Variable :: assignable() { return _assignable; }
-void Variable :: set_assignable(bool key) { _assignable = key; }
-bool Variable :: match(Number operand) {
+Var :: Var(string s) : _symbol(s) {}
+string Var :: value() { return _value; }
+string Var :: symbol() { return _symbol; }
+void Var :: set_value(string key) { _value = key; }
+bool Var :: assignable() { return _assignable; }
+void Var :: set_assignable(bool key) { _assignable = key; }
+bool Var :: match(Number operand) {
 	string value;
 	std :: stringstream ss;
 	ss << operand.value();
@@ -22,7 +22,7 @@ bool Variable :: match(Number operand) {
 	}
 	return false;
 }
-bool Variable :: match(Atom operand) {
+bool Var :: match(Atom operand) {
 	if(_assignable || _value == operand.symbol()) {
 		_value = operand.symbol();
 		_assignable = false;

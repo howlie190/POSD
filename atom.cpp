@@ -4,7 +4,7 @@
 Atom :: Atom(string s) : _symbol(s) {}
 string Atom :: symbol() { return _symbol; }
 bool Atom :: match(Number operand) { return false; }
-bool Atom :: match(Variable &operand) {
+bool Atom :: match(Var &operand) {
 	if(operand.assignable() || _symbol == operand.value()) {
 		operand.set_value(_symbol);
 		operand.set_assignable(false);
