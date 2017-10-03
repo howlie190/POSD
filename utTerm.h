@@ -5,7 +5,7 @@
 #include "variable.h"
 //test Number.value()
 TEST (Number,ctor) {
-	Number number("number", 25);
+	Number number(25);
 	ASSERT_EQ("25", number.value());
 }
 //test Number.symbol()
