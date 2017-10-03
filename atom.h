@@ -3,7 +3,7 @@
 #include <string>
 using std :: string;
 class Number;
-class Var;
+class Variable;
 class Atom {
 private:
 	const string _symbol;
@@ -11,7 +11,7 @@ public:
 	Atom(string s);
 	string symbol();
 	bool match(Number operand);
-	bool match(Var &operand);
+	bool match(Variable &operand);
 	bool match(Atom operand);
 };
 #endif

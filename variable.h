@@ -4,13 +4,13 @@
 using std :: string;
 class Atom;
 class Number;
-class Var {
+class Variable {
 private:
 	const string _symbol;
 	string _value;
 	bool _assignable = true;
 public:
-	Var(string s);
+	Variable(string s);
 	string value();
 	string symbol();
 	void set_value(string key);
