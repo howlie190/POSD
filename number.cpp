@@ -29,7 +29,7 @@ string Number :: value() {
 	return ss.str();
 }
 string Number :: symbol() {
-	std :: stringtream ss;
+	std :: stringstream ss;
 	ss << _value;
 	return ss.str();
 }
