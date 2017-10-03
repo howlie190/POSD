@@ -10,32 +10,32 @@ TEST (Number,ctor) {
 }
 //test Number.symbol()
 TEST (Number, symbol) {
-	Number number("number", 25);
-	ASSERT_EQ("number", number.symbol());
+	Number number(25);
+	ASSERT_EQ("25", number.symbol());
 }
 //?- 25=25.
 //true.
 TEST (Number, matchSuccess) {
-	Number numberX("numberX", 25), numberY("numberY", 25);
+	Number numberX(25), numberY(25);
 	ASSERT_TRUE(numberX.match(numberY));
 }
 //?- 25=0.
 //false.
 TEST (Number, matchFailureDiffValue) {
-	Number numberX("numberX", 25), numberY("numberY", 0);
+	Number numberX(25), numberY(0);
 	ASSERT_FALSE(numberX.match(numberY));
 }
 //?- 25=tom.
 //false.
 TEST (Number, matchFailureDiffConstant) {
-	Number number("number", 25);
+	Number number(25);
 	Atom tom("tom");
 	ASSERT_FALSE(number.match(tom));
 }
 //?- 25=X.
 //true.
 TEST (Number, matchSuccessToVar) {
-	Number number("number", 25);
+	Number number(25);
 	Variable X("X");
 	ASSERT_TRUE(number.match(X));
 }
@@ -43,7 +43,7 @@ TEST (Number, matchSuccessToVar) {
 //?- tom=25.
 //false.
 TEST (Atom, matchFailureDiffConstant) {
-	Number number("number", 25);
+	Number number(25);
 	Atom tom("tom");
 	ASSERT_FALSE(tom.match(number));
 }
@@ -78,7 +78,7 @@ TEST (Atom, matchFailureToVarInstantedToDiffConstant) {
 // X = 5.
 TEST (Var, matchSuccessToNumber) {
 	Variable X("X");
-	Number number("number", 5);
+	Number number(5);
 	ASSERT_TRUE(X.match(number));
 }
 
@@ -86,7 +86,7 @@ TEST (Var, matchSuccessToNumber) {
 // false.
 TEST (Var, matchFailureToTwoDiffNumbers) {
 	Variable X("X");
-	Number numberX("numberX", 25), numberY("numberY", 100);
+	Number numberX(25), numberY(100);
 	ASSERT_TRUE(X.match(numberX));
 	ASSERT_FALSE(X.match(numberY));
 }
@@ -96,7 +96,7 @@ TEST (Var, matchFailureToTwoDiffNumbers) {
 TEST (Var, matchSuccessToAtomThenFailureToNumber) {
 	Variable X("X");
 	Atom tom("tom");
-	Number number("number", 25);
+	Number number(25);
 	ASSERT_TRUE(X.match(tom));
 	ASSERT_FALSE(X.match(number));
 }
@@ -105,7 +105,7 @@ TEST (Var, matchSuccessToAtomThenFailureToNumber) {
 TEST (Var, matchSuccessToAtomThenFailureToNumber2) {
 	Variable X("X");
 	Atom tom("tom");
-	Number number("number", 25);
+	Number number(25);
 	ASSERT_TRUE(tom.match(X));
 	ASSERT_FALSE(number.match(X));
 }

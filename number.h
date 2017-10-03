@@ -6,10 +6,8 @@ class Atom;
 class Variable;
 class Number {
 private:
-	const string _symbol;
 	const int _value;
 public:
-	Number(string, int);
 	Number(int);
 	bool match(Atom operand);
 	bool match(Number operand);

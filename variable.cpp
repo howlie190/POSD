@@ -11,12 +11,10 @@ void Variable :: set_value(string key) { _value = key; }
 bool Variable :: assignable() { return _assignable; }
 void Variable :: set_assignable(bool key) { _assignable = key; }
 bool Variable :: match(Number operand) {
-	string value;
 	std :: stringstream ss;
 	ss << operand.value();
-	ss >> value;
-	if(_assignable || _value == value) {
-		_value = value;
+	if(_assignable || _value == ss.str()) {
+		_value = ss.str();
 		_assignable = false;
 		return true;
 	}

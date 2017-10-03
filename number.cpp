@@ -4,7 +4,6 @@
 #include <string>
 #include <sstream>
 using std :: string;
-Number :: Number(string s, int i) : _symbol(s), _value(i) {}
 Number :: Number(int i) : _value(i) {}
 bool Number :: match(Atom operand) { return false; }
 bool Number :: match(Number operand) {
@@ -15,12 +14,10 @@ bool Number :: match(Number operand) {
 	return _value == value;
 }
 bool Number :: match(Variable &operand) {
-	string value;
 	std :: stringstream ss;
 	ss << _value;
-	ss >> value;
-	if(operand.assignable() || operand.value() == value) {
-		operand.set_value(value);
+	if(operand.assignable() || operand.value() == ss.str()) {
+		operand.set_value(ss.str());
 		operand.set_assignable(false);
 		return true;
 	}
@@ -31,4 +28,8 @@ string Number :: value() {
 	ss << _value;
 	return ss.str();
 }
-string Number :: symbol() { return _symbol; }
+string Number :: symbol() {
+	std :: stringtream ss;
+	ss << _value;
+	return ss.str();
+}
