@@ -80,7 +80,7 @@ TEST(Struct, match5)
 // and #value() should also return "s(X)"
 TEST(Struct, var)
 {
-    Variable X("X");
+    variable X("X");
     std :: vector<Term *> v = {&X};
     Struct s(atom("s"), v);
     EXPECT_EQ("s(X)", s.symbol());
@@ -94,7 +94,7 @@ TEST(Struct, var)
 TEST(Struct, var_match_atom)
 {
     atom tom("tom");
-    Variable X("X");
+    variable X("X");
     std :: vector<Term *> v = {&X};
     Struct s(atom("s"), v);
     X.match(tom);
@@ -109,7 +109,7 @@ TEST(Struct, var_match_atom)
 // and #value() of s1 should also return "s1(s2(X))"
 TEST(Struct, nested_struct1)
 {
-    Variable X("X");
+    variable X("X");
     std :: vector<Term *> v2 = {&X};
     Struct s2(atom("s2"), v2);
     std :: vector<Term *> v1 = {&s2};
@@ -126,7 +126,7 @@ TEST(Struct, nested_struct1)
 TEST(Struct, nested_struct2)
 {
     atom tom("tom");
-    Variable X("X");
+    variable X("X");
     std :: vector<Term *> v2 = {&X};
     Struct s2(atom("s2"), v2);
     X.match(tom);
@@ -144,7 +144,7 @@ TEST(Struct, nested_struct2)
 TEST(Struct, nested_struct3)
 {
     number pi(3.14);
-    Variable X("X");
+    variable X("X");
     std :: vector<Term *> v2 = {&X};
     Struct s2(atom("s2"), v2);
     X.match(pi);
@@ -162,7 +162,7 @@ TEST(Struct, nested_struct3)
 // and #value() of s1 should return "s1(s2(kent_beck), kent_beck)"
 TEST(Struct, nested_struct_and_multiVariable)
 {
-    Variable X("X"), Y("Y");
+    variable X("X"), Y("Y");
     X.match(Y);
     atom kent_beck("kent_beck");
     std :: vector<Term *> v2 = {&Y};
