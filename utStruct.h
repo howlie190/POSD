@@ -143,7 +143,7 @@ TEST(Struct, nested_struct2)
 // and #value() of s1 should return "s1(s2(3.14))"
 TEST(Struct, nested_struct3)
 {
-    Number pi(3.14);
+    number pi(3.14);
     Variable X("X");
     std :: vector<Term *> v2 = {&X};
     Struct s2(Atom("s2"), v2);
