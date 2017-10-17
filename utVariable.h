@@ -26,7 +26,7 @@ TEST (Variable , haveValue){
 // X=2.7182
 TEST(Variable , numE_to_varX){
     Variable X("X");
-    Number num(2.7182);
+    number num(2.7182);
     EXPECT_TRUE(X.match(num));
     EXPECT_EQ("2.7182", X.value());
 }
@@ -34,7 +34,7 @@ TEST(Variable , numE_to_varX){
 // Y=1
 TEST (Variable, varY_to_varX_and_num1_to_varX) {
     Variable X("X"), Y("Y");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(X.match(Y));
     EXPECT_TRUE(X.match(num));
     EXPECT_TRUE(Y.match(num));
@@ -43,7 +43,7 @@ TEST (Variable, varY_to_varX_and_num1_to_varX) {
 // X=1
 TEST (Variable, varY_to_varX_and_num1_to_varY) {
     Variable X("X"), Y("Y");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(Y.match(num));
     EXPECT_TRUE(X.match(num));
 }
@@ -51,7 +51,7 @@ TEST (Variable, varY_to_varX_and_num1_to_varY) {
 // X=1
 TEST (Variable, varX_match_varX_and_num1_to_varX) {
     Variable X("X");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(X.match(X));
     EXPECT_TRUE(X.match(num));
     EXPECT_EQ("1", X.value());
@@ -60,7 +60,7 @@ TEST (Variable, varX_match_varX_and_num1_to_varX) {
 // X=1
 TEST (Variable, num1_to_varY_and_varX_match_varY) {
     Variable X("X"), Y("Y");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(Y.match(num));
     EXPECT_TRUE(X.match(Y));
     EXPECT_TRUE(X.match(num));
@@ -69,7 +69,7 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varY_to_varX) {
     Variable X("X"), Y("Y"), Z("Z");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(X.match(Y));
     EXPECT_TRUE(Y.match(Z));
     EXPECT_TRUE(Z.match(num));
@@ -81,7 +81,7 @@ TEST (Variable, num1_to_varZ_to_varY_to_varX) {
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
     Variable X("X"), Y("Y"), Z("Z");
-    Number num(1);
+    number num(1);
     EXPECT_TRUE(X.match(Y));
     EXPECT_TRUE(X.match(Z));
     EXPECT_TRUE(Z.match(num));
