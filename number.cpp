@@ -11,7 +11,7 @@ string Number :: value() const {
 bool Number :: match(Term &term) {
     Variable *ps = dynamic_cast<Variable *>(&term);
     if(ps) {
-        ps->match(*this);
+        return ps->match(*this);
     }
     return _symbol == term.symbol();
 }
