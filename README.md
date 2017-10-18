@@ -43,4 +43,3 @@ Please use [the files that were used in course](https://github.com/yccheng66/pos
   * If your CI job can not pull your repository, email to us.
 
 #### Change log
-
