@@ -48,4 +48,9 @@ TEST(Struct, match2) {
     EXPECT_EQ("Y", Y.symbol());
     EXPECT_EQ("s(teddy)", Y.value());
 }
+TEST(Number, match) {
+    Variable X("X"), Y("Y");
+    X.match(Y);
+    ASSERT_EQ("Y", X.value());
+}
 #endif

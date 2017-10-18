@@ -6,14 +6,14 @@
 using std :: vector;
 class Struct : public Term {
 private:
-    atom _name;
+    Atom _name;
     vector<Term *>_args;
 public:
-    Struct(atom name, std :: vector<Term *> args) : _name(name), _args(args) {}
+    Struct(Atom name, std :: vector<Term *> args) : _name(name), _args(args) {}
     string symbol() const;
     string value() const;
     bool match(Term &term);
-    atom name();
+    Atom name();
     Term * args(int);
 };
 #endif

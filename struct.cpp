@@ -29,5 +29,5 @@ bool Struct :: match(Term &term) {
         return pt->match(*this);
     return false;
 }
-atom Struct :: name() { return _name; }
+Atom Struct :: name() { return _name; }
 Term * Struct :: args(int index) { return _args[index]; }

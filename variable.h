@@ -4,21 +4,21 @@
 #include <vector>
 #include "struct.h"
 using std :: vector;
-class variavle : public Term {
+class Variable : public Term {
 private:
     const string _symbol;
     string _value;
     bool _assignable = true;
-    vector<variavle *>_v;
+    vector<Variable *>_v;
     Struct *_struct;
     bool _structMatch = false;
 public:
-    variavle(string);
+    Variable(string);
     string symbol() const;
     string value() const;
     bool match(Term &term);
-    void copy(variavle *);
+    void copy(Variable *);
     void chain();
-    void memberCopy(variavle *);
+    void memberCopy(Variable *);
 };
 #endif
