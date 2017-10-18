@@ -13,7 +13,6 @@ bool Variable :: match(Term &term) {
     if(ps) {
         if(_assignable && ps->_assignable) {
             _value = ps->symbol();
-            ps->_value = _symbol;
             copy(ps);
             memberCopy(ps);
             _v.push_back(ps);
