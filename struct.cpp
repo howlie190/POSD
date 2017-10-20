@@ -13,8 +13,8 @@ string Struct :: value() const {
     return ret += (_args[_args.size() - 1]->value() + ")");
 }
 bool Struct :: match(Term &term) {
-    Struct *ps = dynamic_cast<Struct *>(&term);
-    Variable *pt = dynamic_cast<Variable *>(&term);
+    Struct *ps = term.getStruct();
+    Variable *pt = term.getVariable();
     if(ps) {
         if(!_name.match(ps->_name))
             return false;
@@ -31,3 +31,4 @@ bool Struct :: match(Term &term) {
 }
 Atom Struct :: name() { return _name; }
 Term * Struct :: args(int index) { return _args[index]; }
+Struct * Struct :: getStruct() { return this; }

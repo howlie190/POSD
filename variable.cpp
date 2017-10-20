@@ -8,8 +8,8 @@ string Variable :: value() const {
     return _value;
 }
 bool Variable :: match(Term &term) {
-    Variable *ps = dynamic_cast<Variable *>(&term);
-    Struct *pt = dynamic_cast<Struct *>(&term);
+    Variable *ps = term.getVariable();
+    Struct *pt = term.getStruct();
     if(ps) {
         if(_assignable || ps->_assignable) {
             _value = ps->symbol();
@@ -62,3 +62,4 @@ void Variable :: memberCopy(Variable *ps) {
     _v.push_back(ps);
     ps->_v.push_back(this);
 }
+Variable * Variable :: getVariable() { return this; }

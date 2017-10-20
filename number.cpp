@@ -9,7 +9,7 @@ string Number :: value() const {
     return ss.str();
 }
 bool Number :: match(Term &term) {
-    Variable *ps = dynamic_cast<Variable *>(&term);
+    Variable *ps = term.getVariable();
     if(ps) {
         return ps->match(*this);
     }

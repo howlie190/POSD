@@ -20,5 +20,6 @@ public:
     void copy(Variable *);
     void chain();
     void memberCopy(Variable *);
+    Variable * getVariable();
 };
 #endif

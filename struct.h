@@ -15,5 +15,6 @@ public:
     bool match(Term &term);
     Atom name();
     Term * args(int);
+    Struct * getStruct();
 };
 #endif
