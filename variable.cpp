@@ -11,24 +11,15 @@ bool Variable :: match(Term &term) {
     Variable *ps = dynamic_cast<Variable *>(&term);
     Struct *pt = dynamic_cast<Struct *>(&term);
     if(ps) {
-        if(_assignable && ps->_assignable) {
+        if(_assignable || ps->_assignable) {
             _value = ps->symbol();
             copy(ps);
             memberCopy(ps);
-            _v.push_back(ps);
-            ps->_v.push_back(this);
+            if(!_assignable)
+                chain();
+            else if(!(ps->_assignable))
+                ps->chain();
             return true;
-        }
-        else if(ps->_assignable) {
-            copy(ps);
-            memberCopy(ps);
-            _v.push_back(ps);
-            ps->_v.push_back(this);
-            chain();
-            return true;
-        }
-        else if(_assignable) {
-            return ps->match(*this);
         }
         return false;
     }
@@ -68,4 +59,6 @@ void Variable :: chain() {
 void Variable :: memberCopy(Variable *ps) {
     for(int i = 0; i < _v.size(); i++)
         _v[i]->_v.push_back(ps);
+    _v.push_back(ps);
+    ps->_v.push_back(this);
 }
