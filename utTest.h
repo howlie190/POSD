@@ -4,6 +4,7 @@
 #include "variable.h"
 #include "struct.h"
 #include "number.h"
+#include "list.h"
 TEST(Atom, match) {
     Atom tom("tom"), jerry("jerry");
     Variable X("X"), Y("Y"), Z("Z");
@@ -52,5 +53,9 @@ TEST(Number, match) {
     Variable X("X"), Y("Y");
     X.match(Y);
     ASSERT_EQ("Y", X.value());
+}
+TEST(List, constructor) {
+    List list;
+    list.symbol();
 }
 #endif

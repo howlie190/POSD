@@ -2,14 +2,16 @@
 Variable :: Variable(string symbol) : _symbol(symbol), _value(symbol) {}
 string Variable :: symbol() const { return _symbol; }
 string Variable :: value() const {
-    if(_structMatch) {
+    if(_structMatch)
         return _struct->value();
-    }
+    if(_listMatch)
+        return _list->value();
     return _value;
 }
 bool Variable :: match(Term &term) {
     Variable *ps = term.getVariable();
     Struct *pt = term.getStruct();
+    List *pl = term.getList();
     if(ps) {
         if(_assignable || ps->_assignable) {
             _value = ps->symbol();
@@ -24,9 +26,21 @@ bool Variable :: match(Term &term) {
         return false;
     }
     if(pt) {
-        if(!_structMatch || _value == pt->value()) {
+        if(!_structMatch || _assignable || _struct->value() == pt->value()) {
             _struct = pt;
             _structMatch = true;
+            _assignable = false;
+            return true;
+        }
+        return false;
+    }
+    if(pl) {
+        if(!_listMatch || _assignable || _list->value() == pl->value()) {
+            if(!checkList(pl))
+                return false;
+            _list = pl;
+            _listMatch = true;
+            _assignable = false;
             return true;
         }
         return false;
@@ -63,3 +77,10 @@ void Variable :: memberCopy(Variable *ps) {
     ps->_v.push_back(this);
 }
 Variable * Variable :: getVariable() { return this; }
+bool Variable :: checkList(List *list) {
+    for(int i = 0; i < list->elementSize(); i++) {
+        if(_symbol == list->getElement(i)->symbol())
+            return false;
+    }
+    return true;
+}
