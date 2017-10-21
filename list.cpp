@@ -1,4 +1,5 @@
 #include "list.h"
+#include "variable.h"
 #include <iostream>
 string List :: symbol() const {
     if(!_elements.size())
@@ -10,6 +11,7 @@ string List :: symbol() const {
 }
 bool List :: match(Term &term) {
     List *pl = term.getList();
+    Variable *pv = term.getVariable();
     if(pl) {
         if(_elements.size() != pl->_elements.size())
             return false;
@@ -21,4 +23,7 @@ bool List :: match(Term &term) {
             }
         return ret;
     }
+    if(pv)
+        return pv->match(*this);
+    return false;
 }
