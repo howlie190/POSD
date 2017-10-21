@@ -1,10 +1,12 @@
 #ifndef utList_h
 #define utList_h
+
 #include "list.h"
 #include "struct.h"
 #include "atom.h"
 #include "number.h"
 #include "variable.h"
+#include <iostream>
 
 // When create a new list without any item
 // Then #symbol() of the list should return "[]"
@@ -200,6 +202,9 @@ TEST(List, headAndTailMatching4) {
 // When client still want to get the head of list
 // Then it should throw a string: "Accessing head in an empty list" as an exception.
 TEST (List, emptyExecptionOfHead) {
+    // Variable X("X"), Y("Y");
+    // vector<Term *>v = {&X, &Y};
+    // List list(v);
     
 }
 
