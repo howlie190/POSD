@@ -205,7 +205,14 @@ TEST (List, emptyExecptionOfHead) {
     // Variable X("X"), Y("Y");
     // vector<Term *>v = {&X, &Y};
     // List list(v);
-    
+    Variable X("X");
+    Atom terence_tao("terence_tao");
+    Number num(496);
+    vector<Term *>v = {&num, &X, &terence_tao};
+    List list(v);
+    List list2(v);
+    ASSERT_TRUE(list.match(list2));
+    ASSERT_TRUE(list2.match(list));
 }
 
 // Given there is a empty list

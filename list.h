@@ -9,8 +9,6 @@ public:
     List() : _elements() {}
     List (std :: vector<Term *> const & elements) : _elements(elements) {}
     Term * head() const {
-        if(_elements.empty())
-            throw "Accessing head in an empty list";
         return _elements[0];
     }
     List * tail() const {

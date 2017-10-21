@@ -13,6 +13,8 @@ bool Variable :: match(Term &term) {
     Struct *pt = term.getStruct();
     List *pl = term.getList();
     if(ps) {
+        if(_value == ps->value())
+            return true;
         if(_assignable || ps->_assignable) {
             _value = ps->symbol();
             copy(ps);
