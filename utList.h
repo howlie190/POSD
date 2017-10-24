@@ -206,8 +206,8 @@ TEST (List, emptyExecptionOfHead) {
     try {
         list.head();
     }
-    catch(std :: exception const & err) {
-        SUCCEED() << err.what();
+    catch(myException err) {
+        EXPECT_EQ("Accessing head in an empty list", err.getError());
     }
 }
 
@@ -219,8 +219,8 @@ TEST (List, emptyExecptionOfTail) {
     try {
         list.tail();
     }
-    catch(std :: exception const & err) {
-        SUCCEED() << err.what();
+    catch(myException err) {
+        EXPECT_EQ("Accessing tail in an empty list", err.getError());
     }
 }
 #endif
