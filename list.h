@@ -18,12 +18,12 @@ public:
     List (std :: vector<Term *> const & elements) : _elements(elements) {}
     Term * head() const {
         if(!_elements.size())
-            throw myException("Accessing head in an empty list");
+            throw string("Accessing head in an empty list");
         return _elements[0];
     }
     List * tail() const {
         if(!_elements.size())
-            throw myException("Accessing tail in an empty list");
+            throw string("Accessing tail in an empty list");
         std :: vector<Term *>v(_elements.begin() + 1, _elements.end());
         List *temp = new List(v);
         return temp;
