@@ -8,7 +8,7 @@ else
 	g++ -o hw4 main.o atom.o variable.o struct.o number.o list.o -lgtest -lpthread
 endif
 
-main.o: main.cpp utList.h utVariable.h utStruct.h
+main.o: main.cpp utList.h
 	g++ -std=gnu++0x -c main.cpp
 
 atom.o: atom.cpp atom.h
