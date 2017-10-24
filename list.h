@@ -29,6 +29,7 @@ public:
         return temp;
     }
     string symbol() const;
+    string value() const;
     List * getList() { return this; }
     int elementSize() { return _elements.size(); }
     Term * getElement(int index) { return _elements[index]; }

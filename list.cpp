@@ -9,6 +9,14 @@ string List :: symbol() const {
         ret += (_elements[i]->symbol() + ", ");
     return ret += (_elements[_elements.size() - 1]->symbol() + "]");
 }
+string List :: value() const {
+    if(!_elements.size())
+    return "[]";
+    string ret = "[";
+    for(int i = 0; i < _elements.size() - 1; i++)
+        ret += (_elements[i]->value() + ", ");
+    return ret += (_elements[_elements.size() - 1]->value() + "]");
+}
 bool List :: match(Term &term) {
     List *pl = term.getList();
     Variable *pv = term.getVariable();
