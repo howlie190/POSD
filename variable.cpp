@@ -21,7 +21,6 @@ bool Variable :: match(Term &term) {
             _value = ps->symbol();
             copy(ps);
             ps->copy(this);
-            //memberCopy(ps);
             if(!_assignable)
                 chain();
             else if(!(ps->_assignable))
@@ -68,26 +67,12 @@ void Variable :: copy(Variable *ps) {
     for(int i = 0; i < ps->_v.size(); i++)
         if(!checkExsit(ps->_v[i]))
             _v.push_back(ps->_v[i]);
-    // if(_v.size() != 0 || ps->_v.size() != 0) {
-    //     vector<Variable *>temp = _v;
-    //     for(int i = 0; i < ps->_v.size(); i++)
-    //         _v.push_back(ps->_v[i]);
-    //     for(int i = 0; i < temp.size(); i++) {
-    //         ps->_v.push_back(_v[i]);
-    //     }
-    // }
 }
 void Variable :: chain() {
     for(int i = 0; i < _v.size(); i++) {
         _v[i]->_value = _value;
         _v[i]->_assignable = false;
     }
-}
-void Variable :: memberCopy(Variable *ps) {
-    for(int i = 0; i < _v.size(); i++)
-        _v[i]->_v.push_back(ps);
-    _v.push_back(ps);
-    ps->_v.push_back(this);
 }
 Variable * Variable :: getVariable() { return this; }
 bool Variable :: checkList(List *list) {
