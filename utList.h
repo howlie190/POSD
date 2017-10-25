@@ -223,4 +223,23 @@ TEST (List, emptyExecptionOfTail) {
         EXPECT_EQ("Accessing tail in an empty list", err);
     }
 }
+// TEST(Test, test) {
+//     Variable X("X"), Y("Y"), W("W"), Z("Z"), U("U"), T("T"), V("V");
+//     X.match(Y);
+//     W.match(Z);
+//     X.match(W);
+//     U.match(T);
+//     V.match(T);
+//     T.match(X);
+//     Atom tom("tom"), jerry("jerry");
+//     Z.match(tom);
+//     ASSERT_EQ("tom", X.value());
+//     ASSERT_EQ("tom", Y.value());
+//     ASSERT_EQ("tom", W.value());
+//     ASSERT_EQ("tom", Z.value());
+//     ASSERT_EQ("tom", U.value());
+//     ASSERT_EQ("tom", T.value());
+//     ASSERT_EQ("tom", V.value());
+
+// }
 #endif

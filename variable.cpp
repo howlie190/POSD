@@ -1,5 +1,7 @@
 #include "variable.h"
-Variable :: Variable(string symbol) : _symbol(symbol), _value(symbol) {}
+Variable :: Variable(string symbol) : _symbol(symbol), _value(symbol) {
+    _v.push_back(this);
+}
 string Variable :: symbol() const { return _symbol; }
 string Variable :: value() const {
     if(_structMatch)
@@ -18,7 +20,8 @@ bool Variable :: match(Term &term) {
         if(_assignable || ps->_assignable) {
             _value = ps->symbol();
             copy(ps);
-            memberCopy(ps);
+            ps->copy(this);
+            //memberCopy(ps);
             if(!_assignable)
                 chain();
             else if(!(ps->_assignable))
@@ -57,14 +60,22 @@ bool Variable :: match(Term &term) {
     return ret;
 }
 void Variable :: copy(Variable *ps) {
-    if(_v.size() != 0 || ps->_v.size() != 0) {
-        vector<Variable *>temp = _v;
-        for(int i = 0; i < ps->_v.size(); i++)
-            _v.push_back(ps->_v[i]);
-        for(int i = 0; i < temp.size(); i++) {
-            ps->_v.push_back(_v[i]);
-        }
+    for(int i = 1; i < _v.size(); i++) {
+        for(int j = 0; j < ps->_v.size(); j++)
+            if(!(_v[i]->checkExsit(ps->_v[j])))
+                _v[i]->_v.push_back(ps->_v[j]);
     }
+    for(int i = 0; i < ps->_v.size(); i++)
+        if(!checkExsit(ps->_v[i]))
+            _v.push_back(ps->_v[i]);
+    // if(_v.size() != 0 || ps->_v.size() != 0) {
+    //     vector<Variable *>temp = _v;
+    //     for(int i = 0; i < ps->_v.size(); i++)
+    //         _v.push_back(ps->_v[i]);
+    //     for(int i = 0; i < temp.size(); i++) {
+    //         ps->_v.push_back(_v[i]);
+    //     }
+    // }
 }
 void Variable :: chain() {
     for(int i = 0; i < _v.size(); i++) {
@@ -85,4 +96,10 @@ bool Variable :: checkList(List *list) {
             return false;
     }
     return true;
+}
+bool Variable :: checkExsit(Variable *ps) {
+    for(int i = 0; i < _v.size(); i++)
+        if(ps->_symbol == _symbol)
+            return true;
+    return false;
 }
