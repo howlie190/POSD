@@ -18,7 +18,8 @@ bool Variable :: match(Term &term) {
         if(_value == ps->value())
             return true;
         if(_assignable || ps->_assignable) {
-            _value = ps->symbol();
+            if(_assignable && ps->_assignable)
+                _value = ps->symbol();
             copy(ps);
             ps->copy(this);
             if(!_assignable)
