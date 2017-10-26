@@ -223,4 +223,41 @@ TEST (List, emptyExecptionOfTail) {
         EXPECT_EQ("Accessing tail in an empty list", err);
     }
 }
+TEST (List,  test) {
+    Variable X("X");
+	Atom tom("tom");
+	Number number(1);
+    vector<Term *>v = {&X, &tom, &number};
+    vector<Term *>v2 = {&X, &tom, &number};
+    vector<Term *>v3 = {&X, &tom, &number};
+	List l1(v);
+	List l2(v2);
+	List l3(v);
+    List l4(v);
+    List l5(v2);
+    List l6(v3);
+    List l7(v2);
+    List l8(v2);
+    List l9(v3);
+    List l10(v2);
+    List l11(v2);
+    List l12(v3);
+    List l13(v2);
+    ASSERT_TRUE(l1.match(l2));
+	ASSERT_TRUE(l1.match(l2));
+	ASSERT_TRUE(l2.match(l3));
+	ASSERT_TRUE(l3.match(l3));
+	ASSERT_TRUE(l2.match(l5));
+	ASSERT_TRUE(l5.match(l4));
+	ASSERT_TRUE(l2.match(l4));
+    ASSERT_TRUE(l4.match(l4));
+    ASSERT_TRUE(l1.match(l2));
+	ASSERT_TRUE(l1.match(l2));
+	ASSERT_TRUE(l2.match(l3));
+	ASSERT_TRUE(l3.match(l3));
+	ASSERT_TRUE(l6.match(l5));
+	ASSERT_TRUE(l7.match(l10));
+	ASSERT_TRUE(l10.match(l9));
+    ASSERT_TRUE(l3.match(l13));
+}
 #endif
