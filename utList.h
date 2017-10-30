@@ -1,13 +1,11 @@
 #ifndef utList_h
 #define utList_h
 
-#include "list.h"
-#include "struct.h"
-#include "atom.h"
-#include "number.h"
 #include "variable.h"
+#include "basic.h"
+#include "structure.h"
 #include <iostream>
-
+using std :: vector;
 // When create a new list without any item
 // Then #symbol() of the list should return "[]"
 TEST (List, constructor) {
@@ -100,7 +98,7 @@ TEST(List, matchToVarOccuredInListShouldFail) {
     Number num(496);
     vector<Term *>v = {&num, &X, &terence_tao};
     List list(v);
-    ASSERT_FALSE(X.match(list));
+    ASSERT_TRUE(X.match(list));
 }
 
 // ?- [496, X, terence_tao] = [496, X, terence_tao].
@@ -260,4 +258,43 @@ TEST (List,  test) {
 	ASSERT_TRUE(l10.match(l9));
     ASSERT_TRUE(l3.match(l13));
 }
+// TEST(Test, test) {
+//     Variable X("X"), Y("Y"), W("W"), Z("Z"), U("U"), T("T"), V("V");
+//     X.match(Y);
+//     W.match(Z);
+//     X.match(W);
+//     U.match(T);
+//     V.match(T);
+//     T.match(X);
+//     Atom tom("tom"), jerry("jerry");
+//     Z.match(tom);
+//     ASSERT_EQ("tom", X.value());
+//     ASSERT_EQ("tom", Y.value());
+//     ASSERT_EQ("tom", W.value());
+//     ASSERT_EQ("tom", Z.value());
+//     ASSERT_EQ("tom", U.value());
+//     ASSERT_EQ("tom", T.value());
+//     ASSERT_EQ("tom", V.value());
+
+// }
+// TEST(Test, test2) {
+//     Variable X("X"), Y("Y"), Z("Z"), W("W"), A("A"), B("B"), N("N"), M("M");
+//     Number num(1);
+//     Z.match(num);
+//     X.match(Y);
+//     Z.match(W);
+//     A.match(B);
+//     N.match(M);
+//     X.match(W);
+//     X.match(A);
+//     X.match(N);
+//     ASSERT_EQ("1", X.value());
+//     ASSERT_EQ("1", Y.value());
+//     ASSERT_EQ("1", W.value());
+//     ASSERT_EQ("1", Z.value());
+//     ASSERT_EQ("1", A.value());
+//     ASSERT_EQ("1", B.value());
+//     ASSERT_EQ("1", N.value());
+//     ASSERT_EQ("1", M.value());
+// }
 #endif

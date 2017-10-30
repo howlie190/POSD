@@ -1,29 +1,26 @@
 #ifndef variable_h
 #define variable_h
-#include "term.h"
-#include "struct.h"
-#include "list.h"
-#include <vector>
-using std :: vector;
+
+#include "basic.h"
+
 class Variable : public Term {
 private:
-    const string _symbol;
-    string _value;
-    bool _assignable = true;
-    vector<Variable *>_v;
-    Struct *_struct;
-    List * _list;
-    bool _structMatch = false;
-    bool _listMatch = false;
+    Term *_ptr;
 public:
-    Variable(string);
-    string symbol() const;
-    string value() const;
-    bool match(Term &term);
-    void copy(Variable *);
-    void chain();
-    void memberCopy(Variable *);
-    Variable * getVariable();
-    bool checkList(List *);
+    Variable(string symbol) : Term(symbol), _ptr(0) {}
+    string value() const {
+        if(_ptr)
+            return _ptr->value();
+        return Term :: value();
+    }
+    bool match(Term &term) {
+        if(this == &term)
+            return true;
+        if(!_ptr) {
+            _ptr = &term;
+            return true;
+        }
+        return _ptr->match(term);
+    }
 };
 #endif
