@@ -8,10 +8,10 @@ private:
     Term *_ptr;
 public:
     Variable(string symbol) : Term(symbol), _ptr(0) {}
-    string value() const {
+    string Term :: value() const {
         if(_ptr)
             return _ptr->value();
-        return Term :: value();
+        return value();
     }
     bool match(Term &term) {
         if(this == &term)
