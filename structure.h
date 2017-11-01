@@ -53,7 +53,7 @@ public:
         return _elements[0];
     }
     List * tail() {
-        if(!_elements.empty())
+        if(_elements.empty())
             throw string("Accessing tail in an empty list");
         std :: vector<Term *>v(_elements.begin() + 1, _elements.end());
         List *temp = new List(v);
