@@ -7,6 +7,7 @@
 
 using std :: string;
 class List;
+class Struct;
 class Term {
 protected:
     string _symbol;
@@ -22,6 +23,7 @@ public:
     virtual string value() const { return symbol(); }
     virtual bool match(Term &term);
     virtual List * getList() { return 0; }
+    virtual Struct * getStruct() { return 0; }
 };
 class Atom : public Term {
 public:
