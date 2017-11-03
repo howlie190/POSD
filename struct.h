@@ -10,7 +10,7 @@ private:
 public:
     Struct(Atom name, std :: vector<Term *>args) : _name(name), _args(args) {}
     Struct(Atom name) : _name(name), _args() {}
-    Term * args(int index) { return _args[index]; }
+    Term & args(int index) { return *_args[index]; }
     Atom & name() { return _name; }
     string symbol() const {
         if(_args.empty())

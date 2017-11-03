@@ -199,8 +199,8 @@ TEST_F(ParserTest, ListAsStruct) {
     Struct *ps = parser.createTerm()->getStruct();
     ASSERT_EQ(2, ps->arity());
     ASSERT_EQ(".(1, [])", ps->symbol());
-    ASSERT_EQ("1", ps->args(0)->symbol());
-    ASSERT_EQ("[]", ps->args(1)->symbol());
+    ASSERT_EQ("1", ps->args(0).symbol());
+    ASSERT_EQ("[]", ps->args(1).symbol());
 }
 
 
@@ -216,8 +216,8 @@ TEST_F(ParserTest, ListAsStruct2) {
     Struct *ps = parser.createTerm()->getStruct();
     ASSERT_EQ(2, ps->arity());
     ASSERT_EQ(".(2, .(1, []))", ps->symbol());
-    ASSERT_EQ("2", ps->args(0)->symbol());
-    ASSERT_EQ(".(1, [])", ps->args(1)->symbol());
+    ASSERT_EQ("2", ps->args(0).symbol());
+    ASSERT_EQ(".(1, [])", ps->args(1).symbol());
 }
 
 
