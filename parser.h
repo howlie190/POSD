@@ -5,6 +5,8 @@
 using std::string;
 
 #include "term.h"
+#include "atom.h"
+#include "number.h"
 #include "variable.h"
 #include "global.h"
 #include "scanner.h"

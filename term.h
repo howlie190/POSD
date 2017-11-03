@@ -25,12 +25,4 @@ public:
     virtual List * getList() { return 0; }
     virtual Struct * getStruct() { return 0; }
 };
-class Atom : public Term {
-public:
-    Atom(string symbol) : Term(symbol) {}
-};
-class Number : public Term {
-public:
-    Number(double value) : Term(value) {}
-};
 #endif

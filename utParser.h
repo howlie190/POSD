@@ -6,6 +6,8 @@
 #include "struct.h"
 #include "list.h"
 #include "variable.h"
+#include "atom.h"
+#include "number.h"
 #include "term.h"
 
 class ParserTest : public ::testing::Test {
