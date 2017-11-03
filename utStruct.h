@@ -2,7 +2,7 @@
 #define utStruct_h
 #include <vector>
 #include "variable.h"
-#include "basic.h"
+#include "term.h"
 #include "structure.h"
 TEST(Struct, hobby)
 {

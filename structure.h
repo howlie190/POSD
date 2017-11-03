@@ -1,7 +1,7 @@
 #ifndef struct_h
 #define struct_h
 
-#include "basic.h"
+#include "term.h"
 #include <vector>
 class Struct : public Term {
 private:

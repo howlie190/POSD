@@ -1,18 +1,18 @@
 all: hw5
 
-hw5: main.o basic.o
+hw5: main.o term.o
 
 ifeq (${OS}, Windows_NT)
-	g++ -o hw5 main.o basic.o -lgtest
+	g++ -o hw5 main.o term.o -lgtest
 else
-	g++ -o hw5 main.o basic.o -lgtest -lpthread
+	g++ -o hw5 main.o term.o -lgtest -lpthread
 endif
 
 main.o: main.cpp utVariable.h utStruct.h utList.h utParser.h
 	g++ -std=gnu++0x -c main.cpp
 
-basic.o: basic.cpp basic.h
-	g++ -std=gnu++0x -c basic.cpp
+term.o: term.cpp term.h
+	g++ -std=gnu++0x -c term.cpp
 
 clean:
 ifeq (${OS}, Windows_NT)

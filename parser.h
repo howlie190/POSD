@@ -4,7 +4,7 @@
 #include <iostream>
 using std::string;
 
-#include "basic.h"
+#include "term.h"
 #include "variable.h"
 #include "global.h"
 #include "scanner.h"

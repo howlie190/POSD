@@ -1,7 +1,7 @@
 #ifndef UTVARIABLE_H
 #define UTVARIABLE_H
 #include "variable.h"
-#include "basic.h"
+#include "term.h"
 #include "structure.h"
 #include <vector>
 TEST(Variable, constructor){

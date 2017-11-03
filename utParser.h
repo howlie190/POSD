@@ -5,7 +5,7 @@
 #include "scanner.h"
 #include "structure.h"
 #include "variable.h"
-#include "basic.h"
+#include "term.h"
 
 class ParserTest : public ::testing::Test {
 protected:

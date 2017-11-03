@@ -1,7 +1,7 @@
 #ifndef utTest_h
 #define utTest_h
 
-#include "basic.h"
+#include "term.h"
 #include "variable.h"
 #include "structure.h"
 

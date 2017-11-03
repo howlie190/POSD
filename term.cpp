@@ -1,4 +1,4 @@
-#include "basic.h"
+#include "term.h"
 #include "variable.h"
 
 bool Term :: match(Term &term) {

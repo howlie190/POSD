@@ -2,7 +2,7 @@
 #define utList_h
 
 #include "variable.h"
-#include "basic.h"
+#include "term.h"
 #include "structure.h"
 #include <iostream>
 using std :: vector;

@@ -1,7 +1,7 @@
 #ifndef variable_h
 #define variable_h
 
-#include "basic.h"
+#include "term.h"
 
 class Variable : public Term {
 private:
