@@ -8,7 +8,8 @@ using std::string;
 #include "variable.h"
 #include "global.h"
 #include "scanner.h"
-#include "structure.h"
+#include "struct.h"
+#include "list.h"
 
 class Parser{
 public:

@@ -3,7 +3,8 @@
 
 #include "parser.h"
 #include "scanner.h"
-#include "structure.h"
+#include "struct.h"
+#include "list.h"
 #include "variable.h"
 #include "term.h"
 
