@@ -199,8 +199,8 @@ TEST_F(ParserTest, ListAsStruct) {
     Struct *ps = parser.createTerm()->getStruct();
     ASSERT_EQ(2, ps->arity());
     ASSERT_EQ(".(1, [])", ps->symbol());
-    ASSERT_EQ("1", ps->args(0).symbol());
-    ASSERT_EQ("[]", ps->args(1).symbol());
+    ASSERT_EQ("1", ps->args(0)->symbol());
+    ASSERT_EQ("[]", ps->args(1)->symbol());
 }
 
 
@@ -216,8 +216,8 @@ TEST_F(ParserTest, ListAsStruct2) {
     Struct *ps = parser.createTerm()->getStruct();
     ASSERT_EQ(2, ps->arity());
     ASSERT_EQ(".(2, .(1, []))", ps->symbol());
-    ASSERT_EQ("2", ps->args(0).symbol());
-    ASSERT_EQ(".(1, [])", ps->args(1).symbol());
+    ASSERT_EQ("2", ps->args(0)->symbol());
+    ASSERT_EQ(".(1, [])", ps->args(1)->symbol());
 }
 
 
@@ -244,8 +244,6 @@ TEST_F(ParserTest, parseStructNoArg) {
     Parser parser(scanner);
     ASSERT_EQ("point()", parser.createTerm()->symbol());
 }
-
-
 // Given there is string: " 12345,  tom,   Date" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return three terms: "12345", "tom" and "Date".
@@ -257,8 +255,6 @@ TEST_F(ParserTest, listOfTermsThree) {
     ASSERT_EQ("tom", terms[1]->symbol());
     ASSERT_EQ("Date", terms[2]->symbol());
 }
-
-
 // Given there is string: "point(11,12)" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return a Struct.
@@ -268,8 +264,6 @@ TEST_F(ParserTest, parseStructTwoArgs) {
     Parser parser(scanner);
     ASSERT_EQ("point(11, 12)", parser.createTerm()->symbol());
 }
-
-
 // Given there is string: "...(11,12)" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return a Struct.
