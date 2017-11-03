@@ -125,7 +125,7 @@ TEST_F(ParserTest, parseVar) {
 TEST_F(ParserTest, listOfTermsEmpty) {
     Scanner scanner;
     Parser parser(scanner);
-    ASSERT_EQ(NULL, parser.createTerm());
+    ASSERT_EQ(nullptr, parser.createTerm());
 }
 
 
@@ -247,12 +247,12 @@ TEST_F(ParserTest, parseStructNoArg) {
 // When parser parses all terms via scanner.
 // Then it should return three terms: "12345", "tom" and "Date".
 TEST_F(ParserTest, listOfTermsThree) {
-//     Scanner scanner(" 12345,  tom,   Date");
-//     Parser parser(scanner);
-//     vector<Term *>terms = parser.getArgs();
-//     ASSERT_EQ("12345", terms[0]->symbol());
-//     ASSERT_EQ("tom", terms[1]->symbol());
-//     ASSERT_EQ(3, terms.size());
+    Scanner scanner(" 12345,  tom,   Date");
+    Parser parser(scanner);
+    vector<Term *>terms = parser.getArgs();
+    ASSERT_EQ("12345", terms[0]->symbol());
+    ASSERT_EQ("tom", terms[1]->symbol());
+    ASSERT_EQ("Date", terms[2]->symbol());
 }
 
 
@@ -261,7 +261,9 @@ TEST_F(ParserTest, listOfTermsThree) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(11, 12)".
 TEST_F(ParserTest, parseStructTwoArgs) {
-
+    Scanner scanner("point(11,12)");
+    Parser parser(scanner);
+    ASSERT_EQ("point(11, 12)", parser.createTerm()->symbol());
 }
 
 
@@ -270,7 +272,9 @@ TEST_F(ParserTest, parseStructTwoArgs) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "...(11, 12)".
 TEST_F(ParserTest, parseStructDOTSTwoArgs) {
-
+    Scanner scanner("...(11,12)");
+    Parser parser(scanner);
+    ASSERT_EQ("...(11, 12)", parser.createTerm()->symbol());
 }
 
 
@@ -279,7 +283,9 @@ TEST_F(ParserTest, parseStructDOTSTwoArgs) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(11)".
 TEST_F(ParserTest, parseStructOneArg) {
-
+    Scanner scanner("point(11)");
+    Parser parser(scanner);
+    ASSERT_EQ("point(11)", parser.createTerm()->symbol());
 }
 
 #endif

@@ -50,7 +50,7 @@ public:
   char currentChar() {
     return buffer[pos];
   }
-
+  char peekNext() { return buffer[pos + 1]; }
   // extractX: extract X and set position right after X
   int extractNumber() {
     int posBegin = position();

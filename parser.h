@@ -28,7 +28,10 @@ public:
                 if(_scanner.nextToken() == ')')
                     return new Struct(*atom, terms);
             }
-            else return atom;
+            else {
+                _scanner.backPosition();
+                return atom;
+            }
         } else if(token == '[') {
             if(_scanner.nextToken() == ']')
                 return new List;
@@ -38,14 +41,14 @@ public:
                 return new List(terms);
             throw string("unexpected token");
         }
-        return NULL;
+        return nullptr;
     }
     vector<Term*> getArgs() {
         Term* term = createTerm();
         vector<Term*> args;
         if(term)
             args.push_back(term);
-        while((_currentToken = _scanner.nextToken()) == ',')
+        while((_scanner.nextToken()) == ',')
             args.push_back(createTerm());
         _scanner.backPosition();
         return args;
