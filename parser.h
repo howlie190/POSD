@@ -46,11 +46,11 @@ private:
         postfix.push_back(nodeArray[i]);
       } else if(stack.empty() && priority(nodeArray[i]->payload) != 0) {
         stack.push_back(nodeArray[i]);
-      } else if(!stack.empty() && priority(nodeArray[i]->payload) < priority(stack.back()->payload)) {
+      } else if(priority(nodeArray[i]->payload) < priority(stack.back()->payload)) {
         postfix.push_back(stack.back());
         stack.pop_back();
         stack.push_back(nodeArray[i]);
-      } else if(!stack.empty() && priority(nodeArray[i]->payload) > priority(stack.back()->payload)) {
+      } else if(priority(nodeArray[i]->payload) > priority(stack.back()->payload)) {
         stack.push_back(nodeArray[i]);
       }
     }
