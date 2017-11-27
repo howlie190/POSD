@@ -1,10 +1,10 @@
 all: hw6
 
 atom.o: atom.cpp atom.h variable.h
-	g++ -std=c++11 -c atom.cpp
+	g++ -std=gnu++0x -c atom.cpp
 
 list.o:list.cpp list.h
-		g++ -std=c++11 -c list.cpp
+	g++ -std=gnu++0x -c list.cpp
 
 hw6: mainScanner.o atom.o list.o scanner.h utScanner.h utParser.h parser.h
 
@@ -16,9 +16,10 @@ endif
 	
 	
 mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
-		g++ -std=c++11 -c mainScanner.cpp
+		g++ -std=gnu++0x -c mainScanner.cpp
 
-clean:
+ifeq (${OS}, Windows_NT)
+	del *.o *.exe
+else
 	rm -f *.o hw6
-stat:
-	wc *.h *.cpp
+endif
