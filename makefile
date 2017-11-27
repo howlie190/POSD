@@ -23,9 +23,13 @@ list.o:list.cpp list.h
 #	g++ -o exp mainExp.o -lgtest -lpthread
 #mainExp.o: mainExp.cpp exp.h global.h
 #	g++ -std=c++11 -c mainExp.cpp
-
 hw6: mainScanner.o atom.o list.o scanner.h utScanner.h utParser.h parser.h
+ifeq (${OS}, Windows_NT)
+	g++ -o hw6 mainScanner.o atom.o list.o -lgtest
+else
 	g++ -o hw6 mainScanner.o atom.o list.o -lgtest -lpthread
+endif
+
 mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
 		g++ -std=c++11 -c mainScanner.cpp
 
@@ -42,6 +46,10 @@ mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h
 #list.o: list.h list.cpp term.h var.h
 #	g++ -std=c++11 -c list.cpp
 clean:
+ifeq (${OS}, Windows_NT)
+	del *.o *.exe
+else
 	rm -f *.o madRace utAtom utVariable hw6
+endif
 stat:
 	wc *.h *.cpp
