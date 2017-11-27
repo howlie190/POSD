@@ -1,23 +1,23 @@
 all: hw6
 
-atom.o: atom.cpp atom.h variable.h
-	g++ -std=gnu++0x -c atom.cpp
-
-list.o:list.cpp list.h
-	g++ -std=gnu++0x -c list.cpp
-
-hw6: mainScanner.o atom.o list.o scanner.h utScanner.h utParser.h parser.h
+hw6: mainScanner.o atom.o list.o
 
 ifeq (${OS}, Windows_NT)
 	g++ -o hw6 mainScanner.o list.o atom.o -lgtest
 else
 	g++ -o hw6 mainScanner.o list.o atom.o -lgtest -lpthread
 endif
-	
-	
-mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
-		g++ -std=gnu++0x -c mainScanner.cpp
 
+mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
+	g++ -std=gnu++0x -c mainScanner.cpp
+
+atom.o: atom.cpp atom.h variable.h
+	g++ -std=gnu++0x -c atom.cpp
+
+list.o:list.cpp list.h
+	g++ -std=gnu++0x -c list.cpp
+
+clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
