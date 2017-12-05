@@ -199,6 +199,10 @@ TEST(iterator, Struct_BFS1) { //  s1(s2(1, tom), X, s3(jerry, tom))
   it->next();
   EXPECT_EQ("s3(jerry, tom)", it->currentItem()->symbol());
   it->next();
-  
+  EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("1", it->currentItem()->symbol());
 }
 #endif

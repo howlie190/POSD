@@ -63,9 +63,8 @@ private:
     int _index;
     bool structure = false;
     void process() {
-        Term *ptr;
         if(!isDone()) {
-            ptr = _t->args(_index)->getStruct();
+            Term *ptr = _t->args(_index)->getStruct();
             if(ptr == nullptr)
                 ptr = _t->args(_index)->getList();
             if(ptr) {
@@ -117,35 +116,49 @@ private:
     Iterator<T> *_it = nullptr;
     int _index;
     std :: queue<Iterator<Term> *>_queue;
-    void process() {
-        Term *ptr;
-        if(!isDone()) {
-            ptr = _t->args(_index)->getStruct();
-            if(ptr == nullptr)
-                ptr = _t->args(_index)->getList();
-            if(ptr) {
-                _it = ptr->createBFSIterator();
-                _it->first();
-                _queue.push(_it);
-                _it = nullptr;
-            }
-        }
-    }
 public:
     friend class Struct;
     friend class List;
     void first() { 
         _index = 0;
-        process();
+        if(_index < _t->arity()) {
+            Term *ptr = _t->args(_index)->getStruct();
+            if(ptr == nullptr)
+                ptr = _t->args(_index)->getList();
+            if(ptr) {
+                _it = ptr->createBFSIterator();
+                _queue.push(_it);
+                _it->first();
+                _it = nullptr;
+            }
+        }
     }
     void next() {
-        
+        if(_it) {
+            _it->next();
+        } else {
+            _index++;
+            if(_index < _t->arity()) {
+                Term *ptr = _t->args(_index)->getStruct();
+                if(ptr == nullptr)
+                    ptr = _t->args(_index)->getList();
+                if(ptr) {
+                    _it = ptr->createBFSIterator();
+                    _queue.push(_it);
+                    _it->first();
+                    _it = nullptr;
+                }
+            } else if(!_queue.empty()) {
+                _it = _queue.front();
+            }
+        }
     }
     T * currentItem() const {
         if(_it)
             return _it->currentItem();
         return _t->args(_index);
     }
+    bool topLevelisDone() const { return _index >= _t->arity(); }
     bool isDone() const { 
         if(_queue.empty() && _index >= _t->arity())
             return true;
