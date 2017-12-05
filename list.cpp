@@ -4,8 +4,11 @@
 #include <iostream>
 #include <string>
 #include "list.h"
+#include "iterator.h"
 using std::vector;
 
+Iterator<Term> * List :: createIterator() { return new ListIterator<Term>(this); }
+Iterator<Term> * List :: createDFSIterator() { return new DFSIterator<Term>(this); }
 string List::symbol() const{
     string ret ;
     if(_elements.size()==0 ){
