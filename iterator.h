@@ -11,7 +11,7 @@ class Iterator {
 public:
     virtual void first() = 0;
     virtual void next() = 0;
-    virtual T * currentItem() const = 0;
+    virtual T currentItem() const = 0;
     virtual bool isDone() const = 0;
     bool firstTime = true;
 };
@@ -20,10 +20,10 @@ template<class T>
 class NullIterator : public Iterator<T> {
 public:
     friend class Term;
-    NullIterator(Term *term) {}
+    NullIterator(T t) {}
     void first() {}
     void next() {}
-    T * currentItem() const { return nullptr; }
+    T currentItem() const { return nullptr; }
     bool isDone() const { return true; }
 };
 
@@ -37,7 +37,7 @@ public:
     friend class Struct;
     void first() { _index = 0; }
     void next() { _index++; }
-    T * currentItem() const { return _s->args(_index); }
+    T currentItem() const { return _s->args(_index); }
     bool isDone() const { return _index >= _s->arity(); }
 };
 template<class T>
@@ -50,14 +50,14 @@ public:
     friend class List;
     void first() { _index = 0; }
     void next() { _index++; }
-    T * currentItem() const { return _l->args(_index); }
+    T currentItem() const { return _l->args(_index); }
     bool isDone() const { return _index >= _l->arity(); }
 };
 template<class T>
 class DFSIterator : public Iterator<T> {
 private:
-    DFSIterator(Term *t) : _t(t), _index(0) {}
-    Term *_t;
+    DFSIterator(T t) : _t(t), _index(0) {}
+    T _t;
     Iterator<T> *_it = nullptr;
     int _index;
     bool structure = false;
@@ -98,7 +98,7 @@ public:
             process();
         }
     }
-    T * currentItem() const {
+    T currentItem() const {
         if(structure)
             return _t->args(_index);
         if(_it)
@@ -110,18 +110,18 @@ public:
 template<class T>
 class BFSIterator : public Iterator<T> {
 private:
-    BFSIterator(Term *t) : _t(t), _index(0) {}
-    T *_t;
+    BFSIterator(T t) : _t(t), _index(0) {}
+    T _t;
     Iterator<T> *_it = nullptr;
     int _index;
-    std :: queue<T *>_queue;
-    std :: vector<T *>_result;
+    std :: queue<T>_queue;
+    std :: vector<T>_result;
 public:
     friend class Struct;
     friend class List;
     void first() { 
         _index = 0;
-        T *term;
+        T term;
         _queue.push(_t);
         while(!_queue.empty()) {
             term = _queue.front();
@@ -136,7 +136,7 @@ public:
     void next() {
         _index++;
     }
-    T * currentItem() const {
+    T currentItem() const {
         return _result[_index];
     }
     

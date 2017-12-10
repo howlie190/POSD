@@ -19,9 +19,9 @@ public:
   virtual List * getList() { return nullptr; }
   virtual int arity() const { return 0; }
   virtual Term * args(int index) { return nullptr; }
-  virtual Iterator<Term> * createIterator();
-  virtual Iterator<Term> * createDFSIterator();
-  virtual Iterator<Term> * createBFSIterator();
+  virtual Iterator<Term *> * createIterator();
+  virtual Iterator<Term *> * createDFSIterator();
+  virtual Iterator<Term *> * createBFSIterator();
 protected:
   Term ():_symbol(""){}
   Term (string s):_symbol(s) {}
@@ -36,11 +36,6 @@ protected:
 class Atom : public Term{
 public:
   Atom(string s):Term(s) {}
-};
-
-class Number : public Term{
-public:
-  Number(double db):Term(db) {}
 };
 
 #endif

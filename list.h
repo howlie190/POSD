@@ -22,9 +22,9 @@ public:
   List (vector<Term *> const & elements):_elements(elements){}
   Term * head() const;
   List * tail() const;
-  Iterator<Term> * createIterator();
-  Iterator<Term> * createDFSIterator();
-  Iterator<Term> * createBFSIterator();
+  Iterator<Term *> * createIterator();
+  Iterator<Term *> * createDFSIterator();
+  Iterator<Term *> * createBFSIterator();
   Term * args(int index) { return _elements[index]; }
   int arity() const { return _elements.size(); }
 private:

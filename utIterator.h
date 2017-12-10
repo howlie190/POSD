@@ -6,7 +6,7 @@
 #include "atom.h"
 #include "list.h"
 #include "iterator.h"
-#include <iostream>
+#include "number.h"
 
  TEST(iterator, first) {
     Number one(1);
@@ -15,7 +15,7 @@
     Number two(2);
     Struct t(Atom("t"), { &X, &two });
     Struct s(Atom("s"), { &one, &t, &Y });
-    Iterator<Term> *itStruct = s.createIterator();
+    Iterator<Term *> *itStruct = s.createIterator();
     itStruct->first();
     ASSERT_EQ("1", itStruct->currentItem()->symbol());
     ASSERT_FALSE(itStruct->isDone());
@@ -35,12 +35,12 @@ TEST(iterator, nested_iterator) {
   Number two(2);
   Struct t(Atom("t"), { &X, &two });
   Struct s(Atom("s"), { &one, &t, &Y });
-  Iterator<Term> *it = s.createIterator();
+  Iterator<Term *> *it = s.createIterator();
   it->first();
   it->next();
   Struct *s2 = dynamic_cast<Struct *>(it->currentItem());
 
-  Iterator<Term> *it2 = s2->createIterator();
+  Iterator<Term *> *it2 = s2->createIterator();
   it2->first();
   ASSERT_EQ("X", it2->currentItem()->symbol());
   ASSERT_FALSE(it2->isDone());
@@ -58,7 +58,7 @@ TEST(iterator, firstList) {
     Number two(2);
     Struct t(Atom("t"), { &X, &two });
     List l({ &one, &t, &Y });
-    Iterator<Term> *itList = l.createIterator();
+    Iterator<Term *> *itList = l.createIterator();
     itList->first();
     ASSERT_EQ("1", itList->currentItem()->symbol());
     ASSERT_FALSE(itList->isDone());
@@ -73,7 +73,7 @@ TEST(iterator, firstList) {
 
 TEST(iterator, NullIterator){
   Number one(1);
-  Iterator<Term> *it = one.createIterator();
+  Iterator<Term *> *it = one.createIterator();
   it->first();
   ASSERT_TRUE(it->isDone());
 }
@@ -85,7 +85,7 @@ TEST(iterator, Struct_DFS1) {  // s1(1, s2(tom, X, s3(1)), jerry, tom)
   Struct s3(Atom("s3"), {&one});
   Struct s2(Atom("s2"), {&tom, &X, &s3});
   Struct s1(Atom("s1"), {&one, &s2, &jerry, &tom});
-  Iterator<Term> *it = s1.createDFSIterator();
+  Iterator<Term *> *it = s1.createDFSIterator();
   it->first();
   EXPECT_EQ("1", it->currentItem()->symbol());
   it->next();
@@ -112,7 +112,7 @@ TEST(iterator, Struct_DFS2) {  // s([tom, X], 1, jerry)
   Variable X("X");
   List list1({&tom, &X});
   Struct s(Atom("s"), {&list1, &one, &jerry});
-  Iterator<Term> *it = s.createDFSIterator();
+  Iterator<Term *> *it = s.createDFSIterator();
   it->first();
   EXPECT_EQ("[tom, X]", it->currentItem()->symbol());
   it->next();
@@ -134,7 +134,7 @@ TEST(iterator, List_DFS1) { //  [1, [tom, X, [1]], jerry, tom]
   List list3({&one});
   List list2({&tom, &X, &list3});
   List list1({&one, &list2, &jerry, &tom});
-  Iterator<Term> *it = list1.createDFSIterator();
+  Iterator<Term *> *it = list1.createDFSIterator();
   it->first();
   EXPECT_EQ("1", it->currentItem()->symbol());
   it->next();
@@ -163,7 +163,7 @@ TEST(iterator, List_DFS2) { //  [s1([tom, X], s2(1)), jerry, 1]
   List list2({&tom, &X});
   Struct s1(Atom("s1"), {&list2, &s2});
   List list1({&s1, &jerry, &one});
-  Iterator<Term> *it = list1.createDFSIterator();
+  Iterator<Term *> *it = list1.createDFSIterator();
   it->first();
   EXPECT_EQ("s1([tom, X], s2(1))", it->currentItem()->symbol());
   it->next();
@@ -191,7 +191,7 @@ TEST(iterator, Struct_BFS1) { //  s1(s2(1, s3(jerry, tom), tom), X)
   Struct s3(Atom("s3"), {&jerry, &tom});
   Struct s2(Atom("s2"), {&one, &s3, &tom});
   Struct s1(Atom("s1"), {&s2, &X});
-  Iterator<Term> *it = s1.createBFSIterator();
+  Iterator<Term *> *it = s1.createBFSIterator();
   it->first();
   EXPECT_EQ("s2(1, s3(jerry, tom), tom)", it->currentItem()->symbol());
   it->next();
@@ -219,7 +219,7 @@ TEST(iterator, Struct_BFS2) { //  s1(1, [tom, [jerry], X], [s2(1), jerry])
   List list2({&jerry});
   List list1({&tom, &list2, &X});
   Struct s1(Atom("s1"), {&one, &list1, &list3});
-  Iterator<Term> *it = s1.createBFSIterator();
+  Iterator<Term *> *it = s1.createBFSIterator();
   it->first();
   EXPECT_EQ("1", it->currentItem()->symbol());
   it->next();
@@ -244,4 +244,58 @@ TEST(iterator, Struct_BFS2) { //  s1(1, [tom, [jerry], X], [s2(1), jerry])
   ASSERT_TRUE(it->isDone());
 }
 
+TEST(iterator, List_BFS1) { //  [[1, [jerry], tom], tom, X]
+  Number one(1);
+  Atom tom("tom"), jerry("jerry");
+  Variable X("X");
+  List list3({&jerry});
+  List list2({&one, &list3, &tom});
+  List list1({&list2, &tom, &X});
+  Iterator<Term *> *it = list1.createBFSIterator();
+  it->first();
+  EXPECT_EQ("[1, [jerry], tom]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("[jerry]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("jerry", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(iterator, List_BFS2) { //  [[1, s1(jerry), tom], s2(tom, X)]
+  Number one(1);
+  Atom tom("tom"), jerry("jerry");
+  Variable X("X");
+  Struct s2(Atom("s2"), {&tom, &X});
+  Struct s1(Atom("s1"), {&jerry});
+  List list2({&one, &s1, &tom});
+  List list1({&list2, &s2});
+  Iterator<Term *> *it = list1.createBFSIterator();
+  it->first();
+  EXPECT_EQ("[1, s1(jerry), tom]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("s2(tom, X)", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("s1(jerry)", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("jerry", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
 #endif
