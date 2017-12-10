@@ -4,6 +4,7 @@
 #include "atom.h"
 #include "struct.h"
 #include "list.h"
+#include <algorithm>
 #include <queue>
 
 template<class T>
@@ -13,7 +14,6 @@ public:
     virtual void next() = 0;
     virtual T currentItem() const = 0;
     virtual bool isDone() const = 0;
-    bool firstTime = true;
 };
 
 template<class T>
@@ -60,52 +60,35 @@ private:
     T _t;
     Iterator<T> *_it = nullptr;
     int _index;
-    bool structure = false;
-    void process() {
-        if(!isDone()) {
-            Term *ptr = _t->args(_index)->getStruct();
-            if(ptr == nullptr)
-                ptr = _t->args(_index)->getList();
-            if(ptr) {
-                _it = ptr->createDFSIterator();
-                _it->first();
-                structure = true;
-            }
-        }
-    }
+    std :: vector<T>_result, _stack, _temp;
 public:
     friend class Struct;
     friend class List;
     void first() { 
         _index = 0;
-        process();
-    }
-    void next() {
-        structure = false;
-        if(_it) {
-            if(_it->firstTime)
-                _it->firstTime = false;
-            else {
-                _it->next();
-                if(_it->isDone()) {
-                    _it = nullptr;
-                    goto label;
-                }
-            }
-        } else {
-            label:
-            _index++;
-            process();
+        T term;
+        _stack.push_back(_t);
+        while(!_stack.empty()) {
+            term = _stack.back();
+            _stack.pop_back();
+            if(_t != term)
+                _result.push_back(term);
+            _it = term->createIterator();
+            _temp.clear();
+            for(_it->first(); !_it->isDone(); _it->next())
+                _temp.push_back(_it->currentItem());
+            std :: reverse(_temp.begin(), _temp.end());
+            for(size_t i = 0; i < _temp.size(); i++)
+                _stack.push_back(_temp[i]);
         }
     }
-    T currentItem() const {
-        if(structure)
-            return _t->args(_index);
-        if(_it)
-            return _it->currentItem();
-        return _t->args(_index);
+    void next() {
+        _index++;
     }
-    bool isDone() const { return _index >= _t->arity(); }
+    T currentItem() const {
+        return _result[_index];
+    }
+    bool isDone() const { return _index >= _result.size(); }
 };
 template<class T>
 class BFSIterator : public Iterator<T> {
