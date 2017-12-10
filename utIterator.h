@@ -184,25 +184,64 @@ TEST(iterator, List_DFS2) { //  [s1([tom, X], s2(1)), jerry, 1]
   ASSERT_TRUE(it->isDone());
 }
 
-TEST(iterator, Struct_BFS1) { //  s1(s2(1, tom), X, s3(jerry, tom))
+TEST(iterator, Struct_BFS1) { //  s1(s2(1, s3(jerry, tom), tom), X)
   Number one(1);
   Atom tom("tom"), jerry("jerry");
   Variable X("X");
   Struct s3(Atom("s3"), {&jerry, &tom});
-  Struct s2(Atom("s2"), {&one, &tom});
-  Struct s1(Atom("s1"), {&s2, &X, &s3});
+  Struct s2(Atom("s2"), {&one, &s3, &tom});
+  Struct s1(Atom("s1"), {&s2, &X});
   Iterator<Term> *it = s1.createBFSIterator();
   it->first();
-  EXPECT_EQ("s2(1, tom)", it->currentItem()->symbol());
+  EXPECT_EQ("s2(1, s3(jerry, tom), tom)", it->currentItem()->symbol());
   it->next();
   EXPECT_EQ("X", it->currentItem()->symbol());
   it->next();
-  EXPECT_EQ("s3(jerry, tom)", it->currentItem()->symbol());
-  it->next();
   EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("s3(jerry, tom)", it->currentItem()->symbol());
   it->next();
   EXPECT_EQ("tom", it->currentItem()->symbol());
   it->next();
-  EXPECT_EQ("1", it->currentItem()->symbol());
+  EXPECT_EQ("jerry", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
 }
+
+TEST(iterator, Struct_BFS2) { //  s1(1, [tom, [jerry], X], [s2(1), jerry])
+  Number one(1);
+  Atom tom("tom"), jerry("jerry");
+  Variable X("X");
+  Struct s2(Atom("s2"), {&one});
+  List list3({&s2, &jerry});
+  List list2({&jerry});
+  List list1({&tom, &list2, &X});
+  Struct s1(Atom("s1"), {&one, &list1, &list3});
+  Iterator<Term> *it = s1.createBFSIterator();
+  it->first();
+  EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("[tom, [jerry], X]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("[s2(1), jerry]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("tom", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("[jerry]", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("s2(1)", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("jerry", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("jerry", it->currentItem()->symbol());
+  it->next();
+  EXPECT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
 #endif

@@ -24,6 +24,7 @@ public:
   List * tail() const;
   Iterator<Term> * createIterator();
   Iterator<Term> * createDFSIterator();
+  Iterator<Term> * createBFSIterator();
   Term * args(int index) { return _elements[index]; }
   int arity() const { return _elements.size(); }
 private:
