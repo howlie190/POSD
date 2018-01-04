@@ -13,7 +13,7 @@ class Scanner {
 public:
   Scanner (string in=""):buffer(in), pos(0), _tokenValue(NONE){}
   void setInput(string in) {buffer = in;}
-  void backPosition() { pos--; }
+
   int nextToken() {
       if (skipLeadingWhiteSpace() >= buffer.length())
         return EOS;
@@ -24,7 +24,7 @@ public:
         string s = extractAtom();
         processToken<ATOM>(s);
         return ATOM;
-      } else if (isSpecialCh(currentChar())) {
+      } else if (isSpecialCh(currentChar()) && position() < buffer.length() - 1) {
         string s = extractAtomSC();
         processToken<ATOMSC>(s);
         return ATOMSC;
@@ -44,7 +44,7 @@ public:
     for (; (buffer[pos] == ' ' || buffer[pos] == '\t') && pos<buffer.length(); ++pos);
     return position();
   }
-  
+
   int position() const {return pos;}
 
   char currentChar() {
@@ -57,10 +57,10 @@ public:
     for (;isdigit(buffer[pos]); ++pos);
     return stoi(buffer.substr(posBegin, pos-posBegin));
   }
-  string semicolonSubstring() { return buffer.substr(buffer.find(";") + 1); }
+
   string extractAtom() {
     int posBegin = position();
-    for (;isalnum(buffer[pos]); ++pos);
+    for (;isalnum(buffer[pos]) || buffer[pos] == '_'; ++pos);
     return buffer.substr(posBegin, pos-posBegin);
   }
 

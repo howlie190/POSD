@@ -1,14 +1,14 @@
 #include "atom.h"
 #include "variable.h"
-#include <typeinfo>
 #include "iterator.h"
+//#include <typeinfo>
 
-Iterator<Term *> * Term :: createIterator()  { return new NullIterator<Term *>(this); }
-Iterator<Term *> * Term :: createDFSIterator()  { return new NullIterator<Term *>(this); }
-Iterator<Term *> * Term :: createBFSIterator()  { return new NullIterator<Term *>(this); }
+Iterator * Term::createIterator(){
+  return new NullIterator(this);
+}
+
 bool Term::match(Term & a){
-  if (typeid(a) ==  typeid(Variable))
+  if (a.getVariable() !=  nullptr)
     return a.match(*this);
-  else
-    return symbol() == a.symbol();
+  return symbol() == a.symbol();
 }
