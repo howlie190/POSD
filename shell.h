@@ -9,6 +9,12 @@ private:
     bool check = false, comma = false, semicolon = false, semicolonTrue = false;
     std :: vector<string>strPool, strPool2;
 public:
+    string interpret(string input) {
+        Scanner scanner(input);
+        Parser parser(scanner);
+        parser.buildExpression();
+        return interpret(parser.getExpressionTree());
+    }
     string interpret(Exp *exp) {
         bool ret = exp->evaluate(), sign[3] = {true, true, true};
         string str = exp->getStr(), strforSign1;
@@ -16,10 +22,6 @@ public:
         if(ret) {
             if(!sign[1] && !sign[0])
                 return "true.";
-            if(str == "X = 1; X = X; Y = 2.")
-                return "X = 1; true; Y = 2.";
-            if(str == "X = 1; X = 1, X = 2; Z = 3.")
-                return "X = 1; Z = 3.";
             if(!sign[1]) {
                 for(int i = 0; i < strPool.size(); i++)
                     strforSign1 += strPool[i];

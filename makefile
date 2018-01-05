@@ -1,4 +1,4 @@
-all: hw8
+all: hw8 shell
 
 madRace: mainMadRace.o
 	g++ -o madRace mainMadRace.o -lgtest -lpthread
@@ -34,8 +34,19 @@ else
 	g++ -o hw8 mainScanner.o atom.o list.o struct.o -lgtest -lpthread
 endif
 
+shell: mainShell.o atom.o list.o struct.o scanner.h utScanner.h utParser.h parser.h exception.h expression.h shell.h
+
+ifeq (${OS}, Windows_NT)
+	g++ -o shell mainShell.o list.o struct.o atom.o -lgtest
+else
+	g++ -o shell mainShell.o list.o struct.o atom.o -lgtest -lpthread
+endif
+
+mainShell.o: mainShell.cpp shell.h
+	g++ -std=gnu++0x -c mainShell.cpp
+
 mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h utExp.h exception.h expression.h shell.h
-		g++ -std=gnu++0x -c mainScanner.cpp
+	g++ -std=gnu++0x -c mainScanner.cpp
 utIterator: mainIterator.o atom.o list.o struct.o iterator.h utIterator.h
 	g++ -o utIterator mainIterator.o atom.o list.o struct.o -lgtest -lpthread
 
@@ -62,5 +73,5 @@ clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
-	rm -f *.o hw8
+	rm -f *.o hw8 shell
 endif
